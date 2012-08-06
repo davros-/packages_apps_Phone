@@ -53,7 +53,7 @@ import java.util.ArrayList;
 /**
  * Implementation of the ITelephony interface.
  */
-public class PhoneInterfaceManager extends ITelephony.Stub {
+    public class PhoneInterfaceManager extends ITelephony.Stub {
     private static final String LOG_TAG = "PhoneInterfaceManager";
     private static final boolean DBG = (PhoneGlobals.DBG_LEVEL >= 2);
     private static final boolean DBG_LOC = false;
