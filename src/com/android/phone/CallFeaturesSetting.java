@@ -182,6 +182,8 @@ public class CallFeaturesSetting extends PreferenceActivity
             "sip_call_options_wifi_only_key";
     private static final String SIP_SETTINGS_CATEGORY_KEY =
             "sip_settings_category_key";
+    private static final String LOCKSCREEN_IF_CALL_ENDS_WITH_SCREENOFF =
+            "lockscreen_if_call_ends_with_screenoff";
 
     private Intent mContactListIntent;
 
@@ -263,6 +265,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private PreferenceScreen mVoicemailSettings;
     private ListPreference mVoicemailNotificationVibrateWhen;
     private SipSharedPreferences mSipSharedPreferences;
+    private CheckBoxPreference mCallEndedWithScreenOffLocks;
 
     private class VoiceMailProvider {
         public VoiceMailProvider(String name, Intent intent) {
@@ -541,6 +544,10 @@ public class CallFeaturesSetting extends PreferenceActivity
             boolean doVibrate = (Boolean) objValue;
             Settings.System.putInt(mPhone.getContext().getContentResolver(),
                     Settings.System.VIBRATE_WHEN_RINGING, doVibrate ? 1 : 0);
+        } else if (preference == mCallEndedWithScreenOffLocks) {
+            boolean doLock = (Boolean) objValue;
+            Settings.System.putInt(mPhone.getContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_IF_CALL_ENDS_WITH_SCREENOFF, doLock ? 1 : 0);
         } else if (preference == mButtonDTMF) {
             int index = mButtonDTMF.findIndexOfValue((String) objValue);
             Settings.System.putInt(mPhone.getContext().getContentResolver(),
@@ -1506,6 +1513,7 @@ public class CallFeaturesSetting extends PreferenceActivity
 
         mRingtonePreference = findPreference(BUTTON_RINGTONE_KEY);
         mVibrateWhenRinging = (CheckBoxPreference) findPreference(BUTTON_VIBRATE_ON_RING);
+        mCallEndedWithScreenOffLocks = (CheckBoxPreference) findPreference(LOCKSCREEN_IF_CALL_ENDS_WITH_SCREENOFF);
         mPlayDtmfTone = (CheckBoxPreference) findPreference(BUTTON_PLAY_DTMF_TONE);
         mButtonDTMF = (ListPreference) findPreference(BUTTON_DTMF_KEY);
         mButtonAutoRetry = (CheckBoxPreference) findPreference(BUTTON_RETRY_KEY);
@@ -1531,6 +1539,12 @@ public class CallFeaturesSetting extends PreferenceActivity
                 prefSet.removePreference(mVibrateWhenRinging);
                 mVibrateWhenRinging = null;
             }
+        }
+
+        if (mCallEndedWithScreenOffLocks != null) {
+            mCallEndedWithScreenOffLocks.setChecked(Settings.System.getInt(getContentResolver(),
+                    Settings.System.LOCKSCREEN_IF_CALL_ENDS_WITH_SCREENOFF, 1) == 1);
+            mCallEndedWithScreenOffLocks.setOnPreferenceChangeListener(this);
         }
 
         if (mPlayDtmfTone != null) {
@@ -1733,6 +1747,17 @@ public class CallFeaturesSetting extends PreferenceActivity
 
         if (mVibrateWhenRinging != null) {
             mVibrateWhenRinging.setChecked(getVibrateWhenRinging(this));
+        }
+
+        if (mCallEndedWithScreenOffLocks != null) {
+            mCallEndedWithScreenOffLocks.setChecked(Settings.System.getInt(getContentResolver(),
+                    Settings.System.LOCKSCREEN_IF_CALL_ENDS_WITH_SCREENOFF, 1) == 1);
+        }
+
+        if (mMwiNotification != null) {
+            int mwi_notification = Settings.System.getInt(getContentResolver(), Settings.System.ENABLE_MWI_NOTIFICATION, 0);
+            mMwiNotification.setChecked(mwi_notification != 0);
+
         }
 
         if (mButtonDTMF != null) {
