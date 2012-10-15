@@ -1754,12 +1754,6 @@ public class CallFeaturesSetting extends PreferenceActivity
                     Settings.System.LOCKSCREEN_IF_CALL_ENDS_WITH_SCREENOFF, 1) == 1);
         }
 
-        if (mMwiNotification != null) {
-            int mwi_notification = Settings.System.getInt(getContentResolver(), Settings.System.ENABLE_MWI_NOTIFICATION, 0);
-            mMwiNotification.setChecked(mwi_notification != 0);
-
-        }
-
         if (mButtonDTMF != null) {
             int dtmf = Settings.System.getInt(getContentResolver(),
                     Settings.System.DTMF_TONE_TYPE_WHEN_DIALING, DTMF_TONE_TYPE_NORMAL);
