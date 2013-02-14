@@ -293,14 +293,7 @@ import java.util.ArrayList;
         int network = -1;
         boolean usesQcLte = SystemProperties.getBoolean(
                         "ro.config.qc_lte_network_modes", false);
-
-        if (getLteOnGsmMode() != 0) {
-            if (on) {
-                network = Phone.NT_MODE_LTE_GSM_WCDMA;
-            } else {
-                network = Phone.NT_MODE_WCDMA_PREF;
-            }
-        } else if (usesQcLte) {
+        if (usesQcLte) {
             if (on) {
                 network = PhoneConstants.NT_MODE_LTE_CDMA_EVDO;
             } else {
@@ -889,9 +882,5 @@ import java.util.ArrayList;
      */
     public int getLteOnCdmaMode() {
         return mPhone.getLteOnCdmaMode();
-    }
-
-    public int getLteOnGsmMode() {
-        return mPhone.getLteOnGsmMode();
     }
 }
