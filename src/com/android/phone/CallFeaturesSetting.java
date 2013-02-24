@@ -1858,6 +1858,7 @@ public class CallFeaturesSetting extends PreferenceActivity
         if (migrateVoicemailVibrationSettingsIfNeeded(prefs)) {
             mVoicemailNotificationVibrate.setChecked(prefs.getBoolean(
                     BUTTON_VOICEMAIL_NOTIFICATION_VIBRATE_KEY, false));
+        }
         if (mFlipAction != null) {
             updateFlipActionSummary(mFlipAction.getValue());
         }
