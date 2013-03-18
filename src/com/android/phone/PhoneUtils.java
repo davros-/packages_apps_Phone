@@ -407,6 +407,10 @@ public class PhoneUtils {
             return PreferenceManager.getDefaultSharedPreferences(context)
                       .getBoolean("button_vibrate_call_waiting", false);
         }
+        static boolean showCallLogAfterCall(Context context) {
+            return PreferenceManager.getDefaultSharedPreferences(context)
+                      .getBoolean("button_calllog_after_call", true);
+        }
         static int flipAction(Context context) {
             String s = PreferenceManager.getDefaultSharedPreferences(context)
                       .getString("flip_action", "0");
