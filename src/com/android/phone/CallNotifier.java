@@ -440,11 +440,6 @@ public class CallNotifier extends Handler
             return;
         }
 
-        if (phone.getPhoneType() == PhoneConstants.PHONE_TYPE_GSM && mNextGsmCallIsForwarded) {
-            mForwardedCalls.add(c);
-            mNextGsmCallIsForwarded = false;
-        }
-
         // Stop any signalInfo tone being played on receiving a Call
         stopSignalInfoTone();
 
